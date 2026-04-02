@@ -1,6 +1,6 @@
 'use client'
-import { useState } from 'react'
-import { Search, Eye, Truck, CheckCircle, XCircle, Package, RefreshCw, ExternalLink } from 'lucide-react'
+import React, { useState } from 'react'
+import { Search, Eye, Truck, CheckCircle, XCircle, Package, RefreshCw } from 'lucide-react'
 import { formatCurrency, formatDate, ORDER_STATUS_COLORS, PAYMENT_STATUS_COLORS } from '@/lib/utils'
 import type { Order } from '@/types'
 
@@ -13,7 +13,7 @@ const DEMO_ORDERS: Order[] = [
 
 const STATUS_LABELS: Record<string, string> = { pending: '待確認', confirmed: '已確認', processing: '處理中', shipped: '已出貨', delivered: '已送達', cancelled: '已取消', refunded: '已退款', paid: '已付款', failed: '付款失敗' }
 
-const ACTIONS: Record<string, { label: string; icon: React.ElementType; nextStatus: string; color: string }> = {
+const ACTIONS: Record<string, { label: string; icon: React.ElementType<{size?: number}>; nextStatus: string; color: string }> = {
   pending: { label: '確認訂單', icon: CheckCircle, nextStatus: 'confirmed', color: 'text-blue-600' },
   confirmed: { label: '開始處理', icon: Package, nextStatus: 'processing', color: 'text-purple-600' },
   processing: { label: '標記出貨', icon: Truck, nextStatus: 'shipped', color: 'text-indigo-600' },
@@ -125,12 +125,17 @@ export default function OrdersPage() {
                       <button onClick={() => setSelectedOrder(order)} className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors text-slate-500" title="查看詳情">
                         <Eye size={14} />
                       </button>
-                      {ACTIONS[order.status] && (
-                        <button onClick={() => updateStatus(order.id, ACTIONS[order.status].nextStatus)}
-                          className={`p-1.5 hover:bg-slate-100 rounded-lg transition-colors ${ACTIONS[order.status].color}`} title={ACTIONS[order.status].label}>
-                          <ACTIONS[order.status].icon size={14} />
-                        </button>
-                      )}
+                      {(() => {
+                        const action = ACTIONS[order.status]
+                        if (!action) return null
+                        const ActionIcon = action.icon
+                        return (
+                          <button onClick={() => updateStatus(order.id, action.nextStatus)}
+                            className={`p-1.5 hover:bg-slate-100 rounded-lg transition-colors ${action.color}`} title={action.label}>
+                            <ActionIcon size={14} />
+                          </button>
+                        )
+                      })()}
                       {order.status !== 'cancelled' && order.status !== 'delivered' && (
                         <button onClick={() => updateStatus(order.id, 'cancelled')} className="p-1.5 hover:bg-red-50 rounded-lg transition-colors text-red-400" title="取消訂單">
                           <XCircle size={14} />
@@ -160,13 +165,18 @@ export default function OrdersPage() {
               {/* Status Actions */}
               <div className="flex flex-wrap gap-2">
                 <span className={`badge ${ORDER_STATUS_COLORS[selectedOrder.status]} text-sm px-3 py-1`}>{STATUS_LABELS[selectedOrder.status]}</span>
-                {ACTIONS[selectedOrder.status] && (
-                  <button onClick={() => updateStatus(selectedOrder.id, ACTIONS[selectedOrder.status].nextStatus)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-lg hover:bg-slate-700 transition-colors">
-                    <ACTIONS[selectedOrder.status].icon size={12} />
-                    {ACTIONS[selectedOrder.status].label}
-                  </button>
-                )}
+                {(() => {
+                  const action = ACTIONS[selectedOrder.status]
+                  if (!action) return null
+                  const ActionIcon = action.icon
+                  return (
+                    <button onClick={() => updateStatus(selectedOrder.id, action.nextStatus)}
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 text-white text-xs font-semibold rounded-lg hover:bg-slate-700 transition-colors">
+                      <ActionIcon size={12} />
+                      {action.label}
+                    </button>
+                  )
+                })()}
               </div>
 
               {/* Customer */}
