@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { Search, Eye, Truck, CheckCircle, XCircle, Package, RefreshCw, type LucideIcon } from 'lucide-react'
+import { Search, Eye, Truck, CheckCircle, XCircle, Package, RefreshCw, ExternalLink, type LucideIcon } from 'lucide-react'
 import { formatCurrency, formatDate, ORDER_STATUS_COLORS, PAYMENT_STATUS_COLORS } from '@/lib/utils'
 import type { Order } from '@/types'
 
