@@ -77,7 +77,7 @@ export default function CheckoutPage() {
             <div key={s.id} className="flex items-center gap-2">
               {idx > 0 && <div className="w-12 h-0.5 bg-gray-200" />}
               <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors
-                ${step === s.id ? 'bg-gray-900 text-white' : step === 'success' || (s.id === 'info' && step === 'payment') ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-500'}`}>
+                ${step === s.id ? 'bg-gray-900 text-white' : (step as string) === 'success' || (s.id === 'info' && step === 'payment') ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-500'}`}>
                 {idx + 1}
               </div>
               <span className={`text-sm font-medium ${step === s.id ? 'text-gray-900' : 'text-gray-400'}`}>{s.label}</span>
