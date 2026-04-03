@@ -109,7 +109,7 @@ export interface AITask {
   priority: 'low' | 'medium' | 'high' | 'urgent'
   status: AITaskStatus
   requires_approval: boolean
-  data: Record<string, unknown>
+  data?: Record<string, unknown>
   result?: Record<string, unknown>
   error?: string
   created_by: 'ai' | 'human'
