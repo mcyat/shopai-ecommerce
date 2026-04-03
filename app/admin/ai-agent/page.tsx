@@ -224,7 +224,7 @@ export default function AIAgentPage() {
                 <p className="text-sm text-slate-700 leading-relaxed">{selectedTask.description}</p>
               </div>
 
-              {Object.keys(selectedTask.data).length > 0 && (
+              {selectedTask.data && Object.keys(selectedTask.data).length > 0 && (
                 <div>
                   <p className="text-xs font-semibold text-slate-500 uppercase mb-2">任務數據</p>
                   <pre className="bg-slate-900 text-green-400 p-3 rounded-xl text-xs overflow-auto">
