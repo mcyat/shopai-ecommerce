@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { Search, Eye, Truck, CheckCircle, XCircle, Package, RefreshCw } from 'lucide-react'
+import { Search, Eye, Truck, CheckCircle, XCircle, Package, RefreshCw, type LucideIcon } from 'lucide-react'
 import { formatCurrency, formatDate, ORDER_STATUS_COLORS, PAYMENT_STATUS_COLORS } from '@/lib/utils'
 import type { Order } from '@/types'
 
@@ -13,7 +13,7 @@ const DEMO_ORDERS: Order[] = [
 
 const STATUS_LABELS: Record<string, string> = { pending: '待確認', confirmed: '已確認', processing: '處理中', shipped: '已出貨', delivered: '已送達', cancelled: '已取消', refunded: '已退款', paid: '已付款', failed: '付款失敗' }
 
-const ACTIONS: Record<string, { label: string; icon: React.ElementType<{size?: number}>; nextStatus: string; color: string }> = {
+const ACTIONS: Record<string, { label: string; icon: LucideIcon; nextStatus: string; color: string }> = {
   pending: { label: '確認訂單', icon: CheckCircle, nextStatus: 'confirmed', color: 'text-blue-600' },
   confirmed: { label: '開始處理', icon: Package, nextStatus: 'processing', color: 'text-purple-600' },
   processing: { label: '標記出貨', icon: Truck, nextStatus: 'shipped', color: 'text-indigo-600' },
